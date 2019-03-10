@@ -10,4 +10,3 @@ export default {
 //   will hold our application migrations
   "migrations-path": path.resolve('./server/migrations')
 };
-
