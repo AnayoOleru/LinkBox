@@ -1,2 +1,28 @@
-"use strict";
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJsaW5rUm91dGUuanMiLCJzb3VyY2VzQ29udGVudCI6W119
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _linksCtr = require('../controllers/linksCtr');
+
+var _linksCtr2 = _interopRequireDefault(_linksCtr);
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var router = _express2.default.Router();
+
+router.post('/add', _linksCtr2.default.createLink);
+
+router.get('/', _linksCtr2.default.getAllLink);
+
+router.patch('/:id/edit', _linksCtr2.default.editLink);
+
+router.delete('/:id/delete', _linksCtr2.default.deleteLink);
+
+exports.default = router;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NlcnZlci9yb3V0ZXMvbGlua1JvdXRlLmpzIl0sIm5hbWVzIjpbInJvdXRlciIsImV4cHJlc3MiLCJSb3V0ZXIiLCJwb3N0IiwiTGlua0NvbnRyIiwiY3JlYXRlTGluayIsImdldCIsImdldEFsbExpbmsiLCJwYXRjaCIsImVkaXRMaW5rIiwiZGVsZXRlIiwiZGVsZXRlTGluayJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUE7Ozs7QUFDQTs7Ozs7O0FBRUEsSUFBTUEsU0FBU0Msa0JBQVFDLE1BQVIsRUFBZjs7QUFFQUYsT0FBT0csSUFBUCxDQUFZLE1BQVosRUFBb0JDLG1CQUFVQyxVQUE5Qjs7QUFFQUwsT0FBT00sR0FBUCxDQUFXLEdBQVgsRUFBZ0JGLG1CQUFVRyxVQUExQjs7QUFFQVAsT0FBT1EsS0FBUCxDQUFhLFdBQWIsRUFBMEJKLG1CQUFVSyxRQUFwQzs7QUFFQVQsT0FBT1UsTUFBUCxDQUFjLGFBQWQsRUFBNkJOLG1CQUFVTyxVQUF2Qzs7a0JBRWVYLE0iLCJmaWxlIjoibGlua1JvdXRlLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IExpbmtDb250ciBmcm9tICcuLi9jb250cm9sbGVycy9saW5rc0N0cic7XG5pbXBvcnQgZXhwcmVzcyBmcm9tICdleHByZXNzJztcblxuY29uc3Qgcm91dGVyID0gZXhwcmVzcy5Sb3V0ZXIoKTtcblxucm91dGVyLnBvc3QoJy9hZGQnLCBMaW5rQ29udHIuY3JlYXRlTGluayk7XG5cbnJvdXRlci5nZXQoJy8nLCBMaW5rQ29udHIuZ2V0QWxsTGluayk7XG5cbnJvdXRlci5wYXRjaCgnLzppZC9lZGl0JywgTGlua0NvbnRyLmVkaXRMaW5rKTtcblxucm91dGVyLmRlbGV0ZSgnLzppZC9kZWxldGUnLCBMaW5rQ29udHIuZGVsZXRlTGluayk7XG5cbmV4cG9ydCBkZWZhdWx0IHJvdXRlcjsiXX0=
