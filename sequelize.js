@@ -1,7 +1,7 @@
 import path from 'path';
 // specifying paths required for sequelize
 export default {
-    // holds db config settings and authentication
+    // holds db config settings and authentication(i.e, to check if the db is connected)
   "config": path.resolve('./server/config', 'config.json'),
 //   holds application models 
   "models-path": path.resolve('./server/models'),
