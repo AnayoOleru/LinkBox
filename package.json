@@ -1,0 +1,40 @@
+{
+  "name": "linkbox",
+  "version": "1.0.0",
+  "description": "Link saving app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./build/server/app.js",
+    "prestart": "npm run build",
+    "prebuild": "rm -rf ./build",
+    "test": " nyc ---reporter=html --reporter=text mocha --timeout 30000 --exit --require babel-register test/* && npm run coverage",
+    "build": "babel ./ -d build --ignore node_modules/ --presets=env --source-maps inline --copy-files",
+    "dev-start": "babel-watch ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnayoOleru/LinkBox.git"
+  },
+  "keywords": [
+    "links",
+    "box"
+  ],
+  "author": "Anayo OLeru",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AnayoOleru/LinkBox/issues"
+  },
+  "homepage": "https://github.com/AnayoOleru/LinkBox#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-watch": "^7.0.0"
+  }
+}
