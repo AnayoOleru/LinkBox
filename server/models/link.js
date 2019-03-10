@@ -1,6 +1,6 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
-  const link = sequelize.define('link', {
+
+export default (sequelize, DataTypes) => {
+  const Link = sequelize.define('link', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -21,5 +21,5 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
   };
-  return link;
+  return Link;
 };
