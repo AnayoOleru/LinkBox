@@ -1,6 +1,6 @@
 
-export default (sequelize, DataTypes) => {
-  const Link = sequelize.define('link', {
+module.exports = (sequelize, DataTypes) => {
+  const Link = sequelize.define('Link', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -9,14 +9,14 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    tags: {
+    tag: {
       type: DataTypes.STRING,
       allowNull: false
     },
-  }, {});
-  link.associate = function(models) {
+  });
+  Link.associate = function(models) {
     // associations can be defined here
-    link.belongsTo(models.user, {
+    Link.belongsTo(models.User, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
