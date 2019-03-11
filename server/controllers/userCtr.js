@@ -1,5 +1,6 @@
 import 'sequelize';
-import User from '../models/user';
+import { User }from '../models';
+// import sequelize from '../../sequelize';
 
 const UserContr = {
 /**
@@ -8,15 +9,16 @@ const UserContr = {
 async createUser(req, res) {
     const { username, profession, password, confirmPassword } = req.body;
     try {
-      const isUsername = await User.findOne({
-        where: {
-          username: username
-        }
-      });
-      if (isUsername) {
-        return res.status(404).send({ sucsess: false, message: 'Username already in use' });
-      }
+    //   const isUsername = await User.findone({
+    //     where: {
+    //       username: username
+    //     }
+    //   });
+    //   if (isUsername) {
+    //     return res.status(404).send({ sucsess: false, message: 'Username already in use' });
+    //   }
     //   const hash = await bcrypt.hash(password, parseInt(saltRounds, 10));
+    console.log(req.body.username);
       await User.create({
         username: username,
         profession: profession,

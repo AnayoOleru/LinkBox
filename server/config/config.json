@@ -15,5 +15,10 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
-  }
+  },
+  "store": {
+    "adapter": "sequelize",
+    "dialect": "postgres",
+    "url": "postgres://vpoynpsh:jTL712-cVsVlK5bzjadXuLTuao5sq1Gu@isilo.db.elephantsql.com:5432/vpoynpsh"
+}
 }
