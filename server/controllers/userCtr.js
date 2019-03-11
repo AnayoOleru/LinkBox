@@ -1,6 +1,6 @@
-import 'sequelize';
-import { User }from '../models';
-// import sequelize from '../../sequelize';
+import models from '../models';
+
+const { User } = models;
 
 const UserContr = {
 /**
@@ -9,22 +9,23 @@ const UserContr = {
 async createUser(req, res) {
     const { username, profession, password, confirmPassword } = req.body;
     try {
-    //   const isUsername = await User.findone({
-    //     where: {
-    //       username: username
-    //     }
-    //   });
-    //   if (isUsername) {
-    //     return res.status(404).send({ sucsess: false, message: 'Username already in use' });
-    //   }
+      const isUsername = await User.findOne({
+        where: {
+          username: username
+        }
+      });
+      if (isUsername) {
+        return res.status(404).send({ sucsess: false, message: `${username} already in use` });
+      }
     //   const hash = await bcrypt.hash(password, parseInt(saltRounds, 10));
-    console.log(req.body.username);
+    console.log('*****', User);
       await User.create({
         username: username,
         profession: profession,
         password: password,
         confirmPassword: confirmPassword
       });
+    console.log('*****', 'Yolo');
       return res.status(201).send({
         success: true, message: 'User succesfully created'
       });

@@ -1,5 +1,7 @@
-import 'sequelize';
-import Link from '../models/link';
+import models from '../models';
+// import Link from '../models/link';
+
+const { Link } = models;
 
 const LinkContr = {
 /**
@@ -8,19 +10,19 @@ const LinkContr = {
 async createLink(req, res) {
     console.log('reached');
     try{
-        // const { title, link, tags} = req.body;
+       const { title, link, tag} = req.body;
         console.log(req.body.title);
         console.log(req.body.link);
         console.log(req.body.tags);
         Link.create({
-            title: req.body.title,
-            link: req.body.link,
-            tags: req.body.tags
+            title,
+            link,
+            tag
         });
         console.log('3');
         return res.status(201).send({
             success: true,
-            message: 'contact succesfully created',
+            message: `${req.body.title} succesfully created`,
           });
     } catch(error) {
         res.status(400).send(error);

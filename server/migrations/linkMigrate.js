@@ -1,26 +1,22 @@
-export default {
+module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('Links', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      profession:{
+      link: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      password:{
+      tag:{
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      confirmPassword:{
-        type:Sequelize.STRING,
         allowNull: false
       },
       createdAt: {
@@ -31,9 +27,18 @@ export default {
         allowNull: false,
         type: Sequelize.DATE
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'userId',
+        },
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('Links');
   }
 };
