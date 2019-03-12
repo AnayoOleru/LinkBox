@@ -1,4 +1,6 @@
 import models from '../models';
+import Token from '../helpers/jwt';
+import HashPassword from '../helpers/jwt';
 
 const { User } = models;
 
@@ -17,17 +19,28 @@ async createUser(req, res) {
       if (isUsername) {
         return res.status(404).send({ sucsess: false, message: `${username} already in use` });
       }
+
     //   const hash = await bcrypt.hash(password, parseInt(saltRounds, 10));
+  const hashPassword = HashPassword.hashPassword(password);
+
     console.log('*****', User);
       await User.create({
         username: username,
         profession: profession,
-        password: password,
+        password: hashPassword,
         confirmPassword: confirmPassword
       });
-    console.log('*****', 'Yolo');
-      return res.status(201).send({
-        success: true, message: 'User succesfully created'
+
+      const userToken = { username: username }
+
+      const token = Token.generateToken(userToken);
+    console.log('*****', );
+      return res.status(201).header('x-auth-token', token).json({
+        success: true, 
+        message: 'User succesfully created',
+        token: token,
+        username: username,
+        profession: profession
       });
     } catch (error) {
         console.log(error);
@@ -45,6 +58,8 @@ async loginUser(req, res) {
           where:
         { password: password }
         });
+        const userToken = { username: username }
+        Token.generateToken(userToken);
         return res.status(202).send({
             // token: createToken(user.id, user.username),
             message: `Welcome back ${username}`
