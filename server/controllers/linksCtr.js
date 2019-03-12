@@ -1,4 +1,6 @@
 import models from '../models';
+import inputVal from '../validations/inputVal';
+import passwordVal from '../validations/passwordVal';
 // import Link from '../models/link';
 
 const { Link } = models;
@@ -8,12 +10,40 @@ const LinkContr = {
  * 
  */
 async createLink(req, res) {
-    console.log('reached');
+    // console.log('reached');
     try{
        const { title, link, tag} = req.body;
-        console.log(req.body.title);
-        console.log(req.body.link);
-        console.log(req.body.tags);
+       if(!title || !link || !tag){
+         return res.status(400).send({
+           status: 400,
+           error: 'Some values are missing'
+         })
+       }
+      //  whitespace
+       if(!inputVal.isWhiteSpace(title, link, tag)) {
+        return res.status(400).send({ 
+            status: 400, 
+            error: "White Space are not allowed in input fields" 
+        });
+
+       }
+      //  title must not be a number
+      if(!inputVal.isName(title, tag)) {
+        return res.status(400).send({ 
+            status: 400, 
+            error: "Title or Tag must only be Alphabets, spaces are allowed" 
+        });
+      }
+      // link must be link
+      if(!inputVal.isURL(link)){
+        return res.status(400).send({ 
+          status: 400, 
+          error: "Links must be http links(format)" 
+      });
+    }
+        // console.log(req.body.title);
+        // console.log(req.body.link);
+        // console.log(req.body.tags);
         Link.create({
             title,
             link,
@@ -43,7 +73,10 @@ async getAllLink(req, res) {
             message: 'Get all Links successful'
         });
       } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({
+          status: 400,
+          message: error
+        });
       }
 },
 /**
@@ -66,9 +99,12 @@ async editLink(req, res) {
           message: 'Sucessfully Updated',
           updatedLink
       });
-    } catch (error) {
-        res.status(400).send(error);
-  } 
+    } catch (error){
+      res.status(400).send({
+        status: 400,
+        message: error
+      });
+    } 
   },
 /**
  * 
@@ -93,7 +129,10 @@ async deleteLink(req, res) {
             message: `Link with id - ${linkId} not found`,
         });
         } catch (error) {
-            res.status(400).send(error);
+          res.status(400).send({
+            status: 400,
+            message: error
+          });
         }
     },
 };

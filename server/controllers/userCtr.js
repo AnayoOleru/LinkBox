@@ -1,6 +1,8 @@
 import models from '../models';
 import Token from '../helpers/jwt';
 import HashPassword from '../helpers/jwt';
+import inputVal from '../validations/inputVal';
+import passwordVal from '../validations/passwordVal';
 
 const { User } = models;
 
@@ -18,6 +20,32 @@ async createUser(req, res) {
       });
       if (isUsername) {
         return res.status(404).send({ sucsess: false, message: `${username} already in use` });
+      }
+      if (!username  || !profession || !password || !confirmPassword) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "Some values are missing" 
+        });
+      }
+      if (!inputVal.isWhiteSpace(username, profession, password, confirmPassword)) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "White Space are not allowed in input fields" 
+        });
+      }
+
+    if (!passwordVal.ispasswordValid(password)) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "Password must be minimum eight characters, at least one letter and one number:" 
+        });
+      }
+
+      if (!inputVal.isName(username, profession)) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "Names must only be Alphabets, spaces are allowed" 
+        });
       }
 
     //   const hash = await bcrypt.hash(password, parseInt(saltRounds, 10));
@@ -53,11 +81,40 @@ async createUser(req, res) {
 async loginUser(req, res) {
     const { username, password } = req.body;
     try {
-        await User
+      if (!username  || !password) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "Some values are missing" 
+        });
+      }
+      if (!inputVal.isWhiteSpace(username, password)) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "White Space are not allowed in input fields" 
+        });
+      }
+
+    if (!passwordVal.ispasswordValid(password)) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "Password is incorrect" 
+        });
+      }
+
+      if (!inputVal.isName(username)) {
+        return res.status(400).send({ 
+            "status": 400, 
+            "error": "Names must only be Alphabets, spaces are allowed" 
+        });
+      }
+        const passwordExist = await User
         .findOne({
           where:
         { password: password }
         });
+        if(!passwordExist){
+          return res.status(404).send({ sucsess: false, message: `${username} does not exist, please register`});
+        }
         const userToken = { username: username }
         Token.generateToken(userToken);
         return res.status(202).send({
