@@ -62,15 +62,12 @@ async createLink(req, res) {
  * 
  */
 async getAllLink(req, res) {
-    const { id } = req.decoded;
+    // const { id } = req.decoded;
     try {
-        await Link.findAll({
-          where: {
-            userId: id
-          }
-        });
+        const All = await Link.findAll();
         return res.status(201).send({
-            message: 'Get all Links successful'
+            message: 'Get all Links successful',
+            data: All
         });
       } catch (error) {
         res.status(400).send({
@@ -84,14 +81,33 @@ async getAllLink(req, res) {
  */
 async editLink(req, res) {
     const { title, link, tag } = req.body;
-    const { linkId } = req.params;
+    const { id } = req.params;
     try{
-    await Link.findOne({ where: { id: linkId, userId: req.decoded.id } });
-
-    const updatedLink = await Link.update(
+    const updatedLink = await Link.findOne({ where: { id: id} });
+      if(!updatedLink){
+        return res.status(400).send({
+          error: 'There is no Link with that Id'
+        })
+      }
+      if(!inputVal.isURL(link)){
+        return res.status(400).send({
+          error: 'Link is incorrect, must be of HTTP format'
+        })
+      }
+      if(!req.body.title || !req.body.link || !req.body.tag){
+        return res.status(400).send({
+          error: 'Some values are missing'
+        })
+      }
+      if(!inputVal.isName(title, tag)){
+        return res.status(400).send({
+          error: 'Title and tag must be alphabets only'
+        })
+      }
+    await Link.update(
         { title, link, tag }, {
           where: {
-            id: linkId
+            id: id
           }
         }
       );
@@ -110,9 +126,9 @@ async editLink(req, res) {
  * 
  */
 async deleteLink(req, res) {
-        const { linkId } = req.params;
+        const { id } = req.params;
         try {
-          const singleLink = await Link.findOne({ where: { id: linkId } });
+          const singleLink = await Link.findOne({ where: { id: id } });
           if (singleLink) {
             if (singleLink.userId === req.decoded.id) {
               singleLink.destroy();
